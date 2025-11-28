@@ -1,33 +1,29 @@
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Star, MapPin, DollarSign } from "lucide-react";
+import { MapPin, Bookmark } from "lucide-react";
 
 interface JobCardProps {
   id: string;
   company: string;
   position: string;
   logo: string;
-  rating: number;
-  reviews: number;
   location: string;
-  salary: string;
+  jobType: string;
+  postedDate: string;
   description: string;
   requirements: string[];
-  verified?: boolean;
 }
 
 const JobCard = ({
   company,
   position,
   logo,
-  rating,
-  reviews,
   location,
-  salary,
+  jobType,
+  postedDate,
   description,
   requirements,
-  verified = false,
 }: JobCardProps) => {
   return (
     <Card className="p-5 hover:shadow-md transition-shadow">
@@ -41,39 +37,31 @@ const JobCard = ({
         <div className="flex-1">
           <div className="flex items-start justify-between mb-2">
             <div>
-              <h3 className="font-semibold text-base font-heading text-foreground">
+              <h3 className="font-semibold text-base font-heading text-foreground hover:text-primary cursor-pointer">
                 {position}
               </h3>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-foreground">
                 {company}
-                {verified && (
-                  <span className="ml-2 text-success">✓</span>
-                )}
               </p>
             </div>
           </div>
 
-          <div className="flex items-center gap-4 text-sm text-muted-foreground mb-3">
-            <div className="flex items-center gap-1">
-              <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-              <span className="font-medium text-foreground">{rating}</span>
-              <span>({reviews} reviews)</span>
-            </div>
+          <div className="flex items-center gap-3 text-sm text-muted-foreground mb-3">
             <div className="flex items-center gap-1">
               <MapPin className="h-4 w-4" />
               <span>{location}</span>
             </div>
-            <div className="flex items-center gap-1">
-              <DollarSign className="h-4 w-4" />
-              <span className="font-medium text-foreground">{salary}</span>
-            </div>
+            <span>•</span>
+            <span>{jobType}</span>
+            <span>•</span>
+            <span>{postedDate}</span>
           </div>
 
           <p className="text-sm text-foreground mb-3 line-clamp-2">
             {description}
           </p>
 
-          <div className="flex flex-wrap gap-2 mb-3">
+          <div className="flex flex-wrap gap-2 mb-4">
             {requirements.map((req) => (
               <Badge key={req} variant="secondary" className="text-xs">
                 {req}
@@ -81,9 +69,14 @@ const JobCard = ({
             ))}
           </div>
 
-          <Button variant="outline" size="sm" className="w-full sm:w-auto">
-            Apply Now
-          </Button>
+          <div className="flex gap-2">
+            <Button size="sm" className="flex-1 sm:flex-initial">
+              Apply
+            </Button>
+            <Button size="sm" variant="outline">
+              <Bookmark className="h-4 w-4" />
+            </Button>
+          </div>
         </div>
       </div>
     </Card>
