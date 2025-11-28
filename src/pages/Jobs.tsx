@@ -2,86 +2,76 @@ import Navbar from "@/components/Navbar";
 import FilterSidebar from "@/components/FilterSidebar";
 import JobCard from "@/components/JobCard";
 import PromotedListings from "@/components/PromotedListings";
+import { Input } from "@/components/ui/input";
+import { Search, MapPin } from "lucide-react";
 
-const Marketplace = () => {
+const Jobs = () => {
   const jobListings = [
     {
       id: "1",
       company: "Google",
       position: "Senior Software Engineer",
       logo: "https://cdn.simpleicons.org/google",
-      rating: 4.6,
-      reviews: 1250,
       location: "Mountain View, CA",
-      salary: "$150k-200k",
+      jobType: "Full-time",
+      postedDate: "2 days ago",
       description: "Join our team to build the next generation of cloud infrastructure. Work on distributed systems at scale with cutting-edge technology.",
       requirements: ["Go", "Kubernetes", "Distributed Systems", "5+ years exp"],
-      verified: true,
     },
     {
       id: "2",
       company: "Meta",
       position: "Product Designer",
       logo: "https://cdn.simpleicons.org/meta",
-      rating: 4.5,
-      reviews: 890,
       location: "Menlo Park, CA",
-      salary: "$130k-170k",
+      jobType: "Full-time",
+      postedDate: "3 days ago",
       description: "Design innovative social experiences for billions of users. Lead end-to-end product design from concept to launch.",
       requirements: ["Figma", "Product Design", "UX Research", "Portfolio required"],
-      verified: true,
     },
     {
       id: "3",
       company: "Netflix",
       position: "Data Scientist",
       logo: "https://cdn.simpleicons.org/netflix",
-      rating: 4.7,
-      reviews: 640,
       location: "Los Gatos, CA",
-      salary: "$160k-210k",
+      jobType: "Full-time",
+      postedDate: "1 week ago",
       description: "Drive content recommendations and personalization using advanced ML models. Impact how millions discover entertainment.",
       requirements: ["Python", "Machine Learning", "SQL", "Statistics"],
-      verified: true,
     },
     {
       id: "4",
       company: "Apple",
       position: "iOS Engineer",
       logo: "https://cdn.simpleicons.org/apple",
-      rating: 4.8,
-      reviews: 1580,
       location: "Cupertino, CA",
-      salary: "$145k-195k",
+      jobType: "Full-time",
+      postedDate: "5 days ago",
       description: "Create groundbreaking experiences for iPhone and iPad. Work on frameworks and features used by millions of developers worldwide.",
       requirements: ["Swift", "UIKit", "SwiftUI", "iOS SDK"],
-      verified: true,
     },
     {
       id: "5",
       company: "Amazon",
       position: "DevOps Engineer",
       logo: "https://cdn.simpleicons.org/amazon",
-      rating: 4.4,
-      reviews: 2100,
       location: "Seattle, WA",
-      salary: "$135k-175k",
+      jobType: "Full-time",
+      postedDate: "1 day ago",
       description: "Build and maintain infrastructure for AWS services. Automate deployment pipelines and ensure high availability at scale.",
       requirements: ["AWS", "Docker", "Terraform", "CI/CD"],
-      verified: true,
     },
     {
       id: "6",
       company: "Microsoft",
       position: "Cloud Solutions Architect",
       logo: "https://cdn.simpleicons.org/microsoft",
-      rating: 4.6,
-      reviews: 1840,
       location: "Redmond, WA",
-      salary: "$155k-205k",
+      jobType: "Full-time",
+      postedDate: "4 days ago",
       description: "Design enterprise cloud solutions on Azure. Partner with customers to architect scalable, secure, and resilient systems.",
       requirements: ["Azure", "Kubernetes", "Microservices", "Enterprise Architecture"],
-      verified: true,
     },
   ];
 
@@ -89,6 +79,30 @@ const Marketplace = () => {
     <div className="min-h-screen bg-background">
       <Navbar />
       
+      {/* Search Section */}
+      <div className="bg-card border-b border-border">
+        <div className="max-w-7xl mx-auto px-4 py-6">
+          <div className="flex gap-3 max-w-3xl">
+            <div className="relative flex-1">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Input
+                type="search"
+                placeholder="Job title or skills"
+                className="pl-10"
+              />
+            </div>
+            <div className="relative flex-1">
+              <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Input
+                type="search"
+                placeholder="Location or Remote"
+                className="pl-10"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div className="max-w-7xl mx-auto px-4 py-6">
         <div className="flex gap-6">
           {/* Left Sidebar - Filters */}
@@ -99,18 +113,12 @@ const Marketplace = () => {
             <div className="flex items-center justify-between mb-4">
               <div>
                 <h1 className="text-2xl font-bold font-heading text-foreground">
-                  Job Listings
+                  {jobListings.length} jobs
                 </h1>
-                <p className="text-sm text-muted-foreground">
-                  {jobListings.length} jobs available
-                </p>
               </div>
               <select className="border border-border rounded px-3 py-2 text-sm bg-card">
-                <option>Sort by: Recommended</option>
-                <option>Highest Rated</option>
-                <option>Most Reviews</option>
-                <option>Lowest Salary</option>
-                <option>Highest Salary</option>
+                <option>Most relevant</option>
+                <option>Most recent</option>
               </select>
             </div>
 
@@ -119,7 +127,7 @@ const Marketplace = () => {
             ))}
           </main>
 
-          {/* Right Sidebar - Promoted/Suggested */}
+          {/* Right Sidebar - Recommended & Saved */}
           <PromotedListings />
         </div>
       </div>
@@ -127,4 +135,4 @@ const Marketplace = () => {
   );
 };
 
-export default Marketplace;
+export default Jobs;

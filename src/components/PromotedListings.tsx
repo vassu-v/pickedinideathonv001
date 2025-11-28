@@ -1,29 +1,39 @@
 import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { TrendingUp } from "lucide-react";
+import { Lightbulb, Bookmark } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const PromotedListings = () => {
-  const promotedJobs = [
+  const recommendedJobs = [
     {
       title: "Senior Software Engineer",
       company: "TechCorp",
-      badge: "Hot",
+      location: "San Francisco, CA",
     },
     {
       title: "Data Scientist",
       company: "DataMinds Pro",
-      badge: "Featured",
+      location: "Remote",
     },
     {
       title: "Product Designer",
       company: "Creative Studios",
-      badge: "New",
+      location: "New York, NY",
     },
     {
       title: "DevOps Engineer",
       company: "CloudSystems Inc",
-      badge: "Featured",
+      location: "Seattle, WA",
+    },
+  ];
+
+  const savedJobs = [
+    {
+      title: "Frontend Developer",
+      company: "StartupXYZ",
+    },
+    {
+      title: "UX Researcher",
+      company: "Design Co",
     },
   ];
 
@@ -31,52 +41,45 @@ const PromotedListings = () => {
     <aside className="w-80 space-y-4">
       <Card className="p-4">
         <div className="flex items-center gap-2 mb-4">
-          <TrendingUp className="h-5 w-5 text-primary" />
-          <h3 className="font-semibold text-sm font-heading">Featured Jobs</h3>
+          <Lightbulb className="h-5 w-5 text-primary" />
+          <h3 className="font-semibold text-sm font-heading">Recommended for you</h3>
         </div>
         <div className="space-y-3">
-          {promotedJobs.map((job, index) => (
+          {recommendedJobs.map((job, index) => (
             <Link
               key={index}
-              to="/marketplace"
+              to="/"
               className="block p-3 rounded hover:bg-secondary transition-colors"
             >
-              <div className="flex items-start justify-between gap-2 mb-1">
-                <h4 className="text-sm font-medium text-foreground line-clamp-1">
-                  {job.title}
-                </h4>
-                <Badge variant="secondary" className="text-xs shrink-0">
-                  {job.badge}
-                </Badge>
-              </div>
-              <p className="text-xs text-muted-foreground">{job.company}</p>
+              <h4 className="text-sm font-medium text-foreground line-clamp-1 mb-1">
+                {job.title}
+              </h4>
+              <p className="text-xs text-muted-foreground mb-1">{job.company}</p>
+              <p className="text-xs text-muted-foreground">{job.location}</p>
             </Link>
           ))}
         </div>
       </Card>
 
       <Card className="p-4">
-        <h3 className="font-semibold text-sm mb-3 font-heading">Suggested Categories</h3>
-        <div className="flex flex-wrap gap-2">
-          {["AI/ML", "Blockchain", "Cloud", "DevOps", "Security"].map((category) => (
-            <Badge key={category} variant="outline" className="text-xs cursor-pointer hover:bg-secondary">
-              {category}
-            </Badge>
+        <div className="flex items-center gap-2 mb-4">
+          <Bookmark className="h-5 w-5 text-primary" />
+          <h3 className="font-semibold text-sm font-heading">Saved jobs</h3>
+        </div>
+        <div className="space-y-3">
+          {savedJobs.map((job, index) => (
+            <Link
+              key={index}
+              to="/"
+              className="block p-3 rounded hover:bg-secondary transition-colors"
+            >
+              <h4 className="text-sm font-medium text-foreground line-clamp-1 mb-1">
+                {job.title}
+              </h4>
+              <p className="text-xs text-muted-foreground">{job.company}</p>
+            </Link>
           ))}
         </div>
-      </Card>
-
-      <Card className="p-4 bg-primary/5 border-primary/20">
-        <h3 className="font-semibold text-sm mb-2 font-heading">Post a Job</h3>
-        <p className="text-xs text-muted-foreground mb-3">
-          Reach thousands of qualified candidates and find the perfect fit for your team.
-        </p>
-        <Link
-          to="#"
-          className="text-xs text-primary font-medium hover:underline"
-        >
-          Get started →
-        </Link>
       </Card>
     </aside>
   );
