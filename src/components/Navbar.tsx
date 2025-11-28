@@ -1,4 +1,4 @@
-import { Briefcase, User } from "lucide-react";
+import { Home, Briefcase } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
@@ -7,7 +7,8 @@ const Navbar = () => {
   const location = useLocation();
   
   const navItems = [
-    { icon: Briefcase, label: "Jobs", path: "/" },
+    { icon: Home, label: "Home", path: "/" },
+    { icon: Briefcase, label: "Jobs", path: "/jobs" },
   ];
 
   return (
