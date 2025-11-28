@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import { Card } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -7,59 +8,103 @@ import { Progress } from "@/components/ui/progress";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { MapPin, Pencil, Plus, Briefcase, GraduationCap } from "lucide-react";
+import { ProfileEditor } from "@/components/ProfileEditor";
+import { useToast } from "@/hooks/use-toast";
 
 const Profile = () => {
-  const experience = [
-    {
-      role: "Senior Full-Stack Developer",
-      company: "Tech Solutions Inc.",
-      period: "2020 - Present",
-      location: "San Francisco, CA",
-      description: "Leading development of enterprise web applications using React, Node.js, and PostgreSQL. Managing a team of 5 developers.",
-    },
-    {
-      role: "Frontend Developer",
-      company: "Digital Agency Co.",
-      period: "2018 - 2020",
-      location: "Remote",
-      description: "Built responsive websites and web applications for various clients using modern frameworks and best practices.",
-    },
-    {
-      role: "Junior Developer",
-      company: "StartUp Labs",
-      period: "2016 - 2018",
-      location: "New York, NY",
-      description: "Contributed to multiple projects, focusing on frontend development and UI implementation.",
-    },
-  ];
+  const { toast } = useToast();
+  const [isEditing, setIsEditing] = useState(false);
+  
+  const [profileData, setProfileData] = useState({
+    name: "Sarah Kim",
+    headline: "Senior Full-Stack Developer & Technical Consultant",
+    location: "San Francisco, CA",
+    about: "Full-stack developer with 8+ years of experience building scalable web applications. Specialized in React, TypeScript, and Node.js. Passionate about creating robust, user-friendly applications and mentoring junior developers.",
+    experience: [
+      {
+        role: "Senior Full-Stack Developer",
+        company: "Tech Solutions Inc.",
+        period: "2020 - Present",
+        location: "San Francisco, CA",
+        description: "Leading development of enterprise web applications using React, Node.js, and PostgreSQL. Managing a team of 5 developers.",
+      },
+      {
+        role: "Frontend Developer",
+        company: "Digital Agency Co.",
+        period: "2018 - 2020",
+        location: "Remote",
+        description: "Built responsive websites and web applications for various clients using modern frameworks and best practices.",
+      },
+      {
+        role: "Junior Developer",
+        company: "StartUp Labs",
+        period: "2016 - 2018",
+        location: "New York, NY",
+        description: "Contributed to multiple projects, focusing on frontend development and UI implementation.",
+      },
+    ],
+    education: [
+      {
+        degree: "Bachelor of Science in Computer Science",
+        school: "Stanford University",
+        period: "2012 - 2016",
+      },
+      {
+        degree: "Full-Stack Web Development Bootcamp",
+        school: "General Assembly",
+        period: "2016",
+      },
+    ],
+    skills: [
+      "React",
+      "TypeScript",
+      "Node.js",
+      "PostgreSQL",
+      "AWS",
+      "Docker",
+      "Python",
+      "GraphQL",
+      "MongoDB",
+      "CI/CD",
+      "Kubernetes",
+      "System Design",
+    ],
+  });
 
-  const education = [
-    {
-      degree: "Bachelor of Science in Computer Science",
-      school: "Stanford University",
-      period: "2012 - 2016",
-    },
-    {
-      degree: "Full-Stack Web Development Bootcamp",
-      school: "General Assembly",
-      period: "2016",
-    },
-  ];
+  const handleSaveProfile = (data: any) => {
+    setProfileData(data);
+    setIsEditing(false);
+    toast({
+      title: "Profile updated",
+      description: "Your changes have been saved successfully.",
+    });
+  };
 
-  const skills = [
-    "React",
-    "TypeScript",
-    "Node.js",
-    "PostgreSQL",
-    "AWS",
-    "Docker",
-    "Python",
-    "GraphQL",
-    "MongoDB",
-    "CI/CD",
-    "Kubernetes",
-    "System Design",
-  ];
+  if (isEditing) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Navbar />
+        <div className="max-w-5xl mx-auto px-4 py-6">
+          <div className="flex items-center justify-between mb-6">
+            <h1 className="text-2xl font-bold font-heading">Edit Profile</h1>
+            <Button variant="outline" onClick={() => setIsEditing(false)}>
+              Cancel
+            </Button>
+          </div>
+          <ProfileEditor
+            name={profileData.name}
+            headline={profileData.headline}
+            location={profileData.location}
+            about={profileData.about}
+            experience={profileData.experience}
+            education={profileData.education}
+            skills={profileData.skills}
+            onSave={handleSaveProfile}
+          />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -74,13 +119,14 @@ const Profile = () => {
               <div className="flex gap-6">
                 <div className="relative">
                   <Avatar className="h-32 w-32">
-                    <AvatarImage src="https://api.dicebear.com/7.x/avataaars/svg?seed=Sarah" alt="Sarah Kim" />
-                    <AvatarFallback>SK</AvatarFallback>
+                    <AvatarImage src="https://api.dicebear.com/7.x/avataaars/svg?seed=Sarah" alt={profileData.name} />
+                    <AvatarFallback>{profileData.name.split(" ").map(n => n[0]).join("")}</AvatarFallback>
                   </Avatar>
                   <Button
                     size="icon"
                     variant="secondary"
                     className="absolute -bottom-2 -right-2 h-8 w-8 rounded-full"
+                    onClick={() => setIsEditing(true)}
                   >
                     <Pencil className="h-4 w-4" />
                   </Button>
@@ -91,17 +137,17 @@ const Profile = () => {
                     <div>
                       <div className="flex items-center gap-2">
                         <h1 className="text-2xl font-bold font-heading text-foreground">
-                          Sarah Kim
+                          {profileData.name}
                         </h1>
-                        <Button size="icon" variant="ghost" className="h-6 w-6">
+                        <Button size="icon" variant="ghost" className="h-6 w-6" onClick={() => setIsEditing(true)}>
                           <Pencil className="h-3 w-3" />
                         </Button>
                       </div>
                       <div className="flex items-center gap-2 mt-1">
                         <p className="text-base text-foreground">
-                          Senior Full-Stack Developer & Technical Consultant
+                          {profileData.headline}
                         </p>
-                        <Button size="icon" variant="ghost" className="h-6 w-6">
+                        <Button size="icon" variant="ghost" className="h-6 w-6" onClick={() => setIsEditing(true)}>
                           <Pencil className="h-3 w-3" />
                         </Button>
                       </div>
@@ -110,8 +156,8 @@ const Profile = () => {
 
                   <div className="flex items-center gap-2 text-sm text-muted-foreground mb-4">
                     <MapPin className="h-4 w-4" />
-                    <span>San Francisco, CA</span>
-                    <Button size="icon" variant="ghost" className="h-6 w-6">
+                    <span>{profileData.location}</span>
+                    <Button size="icon" variant="ghost" className="h-6 w-6" onClick={() => setIsEditing(true)}>
                       <Pencil className="h-3 w-3" />
                     </Button>
                   </div>
@@ -123,14 +169,12 @@ const Profile = () => {
             <Card className="p-6">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-xl font-semibold font-heading">About</h2>
-                <Button size="icon" variant="ghost">
+                <Button size="icon" variant="ghost" onClick={() => setIsEditing(true)}>
                   <Pencil className="h-4 w-4" />
                 </Button>
               </div>
               <p className="text-foreground leading-relaxed">
-                Full-stack developer with 8+ years of experience building scalable web applications. 
-                Specialized in React, TypeScript, and Node.js. Passionate about creating robust, 
-                user-friendly applications and mentoring junior developers.
+                {profileData.about}
               </p>
             </Card>
 
@@ -138,12 +182,12 @@ const Profile = () => {
             <Card className="p-6">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-xl font-semibold font-heading">Experience</h2>
-                <Button size="icon" variant="ghost">
+                <Button size="icon" variant="ghost" onClick={() => setIsEditing(true)}>
                   <Plus className="h-4 w-4" />
                 </Button>
               </div>
               <div className="space-y-6">
-                {experience.map((job, index) => (
+                {profileData.experience.map((job, index) => (
                   <div key={index} className="flex gap-4 group">
                     <div className="shrink-0">
                       <div className="h-12 w-12 rounded bg-secondary flex items-center justify-center">
@@ -160,7 +204,7 @@ const Profile = () => {
                           </p>
                           <p className="text-sm text-foreground">{job.description}</p>
                         </div>
-                        <Button size="icon" variant="ghost" className="opacity-0 group-hover:opacity-100">
+                        <Button size="icon" variant="ghost" className="opacity-0 group-hover:opacity-100" onClick={() => setIsEditing(true)}>
                           <Pencil className="h-4 w-4" />
                         </Button>
                       </div>
@@ -174,12 +218,12 @@ const Profile = () => {
             <Card className="p-6">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-xl font-semibold font-heading">Education</h2>
-                <Button size="icon" variant="ghost">
+                <Button size="icon" variant="ghost" onClick={() => setIsEditing(true)}>
                   <Plus className="h-4 w-4" />
                 </Button>
               </div>
               <div className="space-y-6">
-                {education.map((edu, index) => (
+                {profileData.education.map((edu, index) => (
                   <div key={index} className="flex gap-4 group">
                     <div className="shrink-0">
                       <div className="h-12 w-12 rounded bg-secondary flex items-center justify-center">
@@ -193,7 +237,7 @@ const Profile = () => {
                           <p className="text-sm text-foreground mb-1">{edu.school}</p>
                           <p className="text-sm text-muted-foreground">{edu.period}</p>
                         </div>
-                        <Button size="icon" variant="ghost" className="opacity-0 group-hover:opacity-100">
+                        <Button size="icon" variant="ghost" className="opacity-0 group-hover:opacity-100" onClick={() => setIsEditing(true)}>
                           <Pencil className="h-4 w-4" />
                         </Button>
                       </div>
@@ -207,12 +251,12 @@ const Profile = () => {
             <Card className="p-6">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-xl font-semibold font-heading">Skills</h2>
-                <Button size="icon" variant="ghost">
+                <Button size="icon" variant="ghost" onClick={() => setIsEditing(true)}>
                   <Plus className="h-4 w-4" />
                 </Button>
               </div>
               <div className="flex flex-wrap gap-2">
-                {skills.map((skill) => (
+                {profileData.skills.map((skill) => (
                   <Badge key={skill} variant="secondary" className="text-sm">
                     {skill}
                   </Badge>
