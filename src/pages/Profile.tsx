@@ -119,7 +119,7 @@ const Profile = () => {
               <div className="flex gap-6">
                 <div className="relative">
                   <Avatar className="h-32 w-32">
-                    <AvatarImage src="https://api.dicebear.com/7.x/avataaars/svg?seed=Sarah" alt={profileData.name} />
+                    <AvatarImage src="/WhatsApp Image 2025-11-29 at 11.51.07 AM.jpeg" alt={profileData.name} />
                     <AvatarFallback>{profileData.name.split(" ").map(n => n[0]).join("")}</AvatarFallback>
                   </Avatar>
                   <Button
