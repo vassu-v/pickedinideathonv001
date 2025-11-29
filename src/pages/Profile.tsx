@@ -16,7 +16,7 @@ const Profile = () => {
   const [isEditing, setIsEditing] = useState(false);
   
   const [profileData, setProfileData] = useState({
-    name: "Sarah Kim",
+    name: "Shoryavardhaan Gupta",
     headline: "Senior Full-Stack Developer & Technical Consultant",
     location: "San Francisco, CA",
     about: "Full-stack developer with 8+ years of experience building scalable web applications. Specialized in React, TypeScript, and Node.js. Passionate about creating robust, user-friendly applications and mentoring junior developers.",
