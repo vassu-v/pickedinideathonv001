@@ -18,7 +18,7 @@ const Profile = () => {
   const [profileData, setProfileData] = useState({
     name: "Shoryavardhaan Gupta",
     headline: "Senior Full-Stack Developer & Technical Consultant",
-    location: "San Francisco, CA",
+    location: "Kolkata, India",
     about: "Full-stack developer with 8+ years of experience building scalable web applications. Specialized in React, TypeScript, and Node.js. Passionate about creating robust, user-friendly applications and mentoring junior developers.",
     experience: [
       {
